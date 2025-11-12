@@ -1,11 +1,13 @@
-#ifndef VISUALALGORITHMCORE_LIBRARY_H
-#define VISUALALGORITHMCORE_LIBRARY_H
+//
+// Created by ushiohayase on 2025-11-05.
+//
+
+#ifndef VISUALALGORITHMCORE_FILE_READ_H
+#define VISUALALGORITHMCORE_FILE_READ_H
 
 #include <fstream>
 
 #include "model.h"
-
-constexpr int MAX_NUMBER_OF_VERTEX_SIZE = (1 << 22);
 
 class FileReadStream
 {
@@ -13,14 +15,9 @@ class FileReadStream
     std::ifstream fs_;
 
    public:
+    FileReadStream(std::string fileName) : fs_(fileName) {}
     virtual ~FileReadStream() = default;
-    virtual void read(std::string& file_name, Model* out_model) = 0;
+    virtual void read(Model* const modelPtr) = 0;
 };
 
-class OBJFileReadStream : FileReadStream
-{
-   public:
-    void read(std::string& file_name, Model* out_model) final override;
-};
-
-#endif  // VISUALALGORITHMCORE_LIBRARY_H
+#endif  // VISUALALGORITHMCORE_FILE_READ_H

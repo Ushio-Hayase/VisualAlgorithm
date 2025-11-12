@@ -5,6 +5,8 @@
 #ifndef VISUALALGORITHMCORE_MATH_H
 #define VISUALALGORITHMCORE_MATH_H
 
+#include <cmath>
+
 struct Vector2
 {
     float x;
@@ -153,18 +155,17 @@ inline float cross(const Vector2& lhs, const Vector2& rhs)
 
 inline Vector3 cross(const Vector3& lhs, const Vector3& rhs)
 {
-    return {lhs.y * rhs.z - lhs.z * rhs.y, lhs.z * rhs.x - lhs.x * rhs.z,
-            lhs.x * rhs.y - lhs.y * rhs.x};
+    return {lhs.y * rhs.z - lhs.z * rhs.y, lhs.z * rhs.x - lhs.x * rhs.z, lhs.x * rhs.y - lhs.y * rhs.x};
 }
 
 inline float norm(const Vector2& vec)
 {
-    return sqrt(vec.x * vec.x + vec.y * vec.y);
+    return std::sqrt(vec.x * vec.x + vec.y * vec.y);
 }
 
 inline float norm(const Vector3& vec)
 {
-    return sqrt(vec.x * vec.x + vec.y * vec.y + vec.z * vec.z);
+    return std::sqrt(vec.x * vec.x + vec.y * vec.y + vec.z * vec.z);
 }
 
 #endif  // VISUALALGORITHMCORE_MATH_H

@@ -1,0 +1,50 @@
+//
+// Created by UshioHayase on 2025-11-11.
+//
+
+#ifndef VISUALALGORITHMCORE_LOG_MACRO_H
+#define VISUALALGORITHMCORE_LOG_MACRO_H
+
+#include "logger.hpp"
+
+#define LOG_INFO(format, ...)                                                                                          \
+    Logger::getInstance().write(LogLevel::Info, __FILE__, __LINE__, __FUNCTION__, format, ##__VA_ARGS__)
+
+#define LOG_WARN(format, ...)                                                                                          \
+    Logger::getInstance().write(LogLevel::Warning, __FILE__, __LINE__, __FUNCTION__, format, ##__VA_ARGS__)
+
+#define LOG_ERROR(format, ...)                                                                                         \
+    Logger::getInstance().write(LogLevel::Error, __FILE__, __LINE__, __FUNCTION__, format, ##__VA_ARGS__)
+
+#define ASSERT(condition)                                                                                              \
+    do                                                                                                                 \
+    {                                                                                                                  \
+        if (!(condition))                                                                                              \
+        {                                                                                                              \
+            LOG_ERROR("Assertion Failed: {}", #condition);                                                             \
+            __debugbreak();                                                                                            \
+        }                                                                                                              \
+    } while (false)
+
+#define ASSERT_EQ(val1, val2)                                                                                            \
+    do                                                                                                                   \
+    {                                                                                                                    \
+        if (!((val1) == (val2))                                                                                     \
+        {                                                                                                              \
+            LOG_ERROR("Assertion Failed: {} == {}. val1: {}, val2: {}", #val1, #val2, (val1),          \
+                      (val2));                                                                                       \
+            __debugbreak();                                                                                            \
+        }                                                                                                                \
+    } while (false)
+
+#define ASSERT_NE(val1, val2)                                                                                          \
+    do                                                                                                                 \
+    {                                                                                                                  \
+        if ((val1) == (val2))                                                                                          \
+        {                                                                                                              \
+            LOG_ERROR("Assertion Failed : {} != {}. val1: {}, val2: {}", #val1, #val2, (val1), (val2));                \
+            __debugbreak();                                                                                            \
+        }                                                                                                              \
+    } while (false)
+
+#endif // VISUALALGORITHMCORE_LOG_MACRO_H

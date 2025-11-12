@@ -6,9 +6,9 @@
 #define VISUALALGORITHMCORE_EXCEPTION_H
 #include <stdexcept>
 
-class FileError final : public std::runtime_error
+class FileError : public std::runtime_error
 {
-   public:
+  public:
     explicit FileError(const std::string& msg) : std::runtime_error(msg)
     {
     }
@@ -16,11 +16,10 @@ class FileError final : public std::runtime_error
 
 class NullPointerError final : public std::runtime_error
 {
-   public:
-    explicit NullPointerError()
-        : std::runtime_error("NullPointerReferenceError")
+  public:
+    explicit NullPointerError() : std::runtime_error("NullPointerReferenceError")
     {
     }
 };
 
-#endif  // VISUALALGORITHMCORE_EXCEPTION_H
+#endif // VISUALALGORITHMCORE_EXCEPTION_H
