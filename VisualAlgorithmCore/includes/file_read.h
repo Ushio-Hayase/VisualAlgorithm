@@ -12,7 +12,7 @@
 class FileReadStream
 {
   protected:
-    std::ifstream fs_;
+    std::ifstream fs;
     std::string fileName;
 
     virtual void initialize() = 0;

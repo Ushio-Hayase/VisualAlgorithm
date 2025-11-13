@@ -46,9 +46,9 @@ void MTLFileReadStream::loadFromFile(std::string fileName, Model* const modelPtr
     }
 
     this->fileName = fileName;
-    fs_ = std::ifstream{fileName};
+    fs = std::ifstream{fileName};
 
-    if (!fs_.is_open())
+    if (!fs.is_open())
     {
         LOG_ERROR("Can't open mtl file, file name is {}", this->fileName);
         throw FileError("can't open file");
@@ -58,7 +58,7 @@ void MTLFileReadStream::loadFromFile(std::string fileName, Model* const modelPtr
 
     auto& finalMaterials = modelPtr->materials;
 
-    while (std::getline(fs_, line))
+    while (std::getline(fs, line))
     {
         using namespace utils;
         std::vector<std::string> words = split_string(line, ' ');
@@ -135,11 +135,11 @@ void MTLFileReadStream::loadFromFile(std::string fileName, Model* const modelPtr
         }
     }
 
-    fs_.close();
+    fs.close();
 }
 
 void MTLFileReadStream::initialize()
 {
-    fs_.clear();
+    fs.clear();
     fileName.clear();
 }

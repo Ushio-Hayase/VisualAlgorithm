@@ -2,8 +2,8 @@
 // Created by UshioHayase on 2025-11-11.
 //
 
-#ifndef VISUALALGORITHMCORE_LOGGER_H
-#define VISUALALGORITHMCORE_LOGGER_H
+#ifndef VISUALALGORITHMCORE_LOGGER_HPP
+#define VISUALALGORITHMCORE_LOGGER_HPP
 
 #include <ios>
 #include <sstream>

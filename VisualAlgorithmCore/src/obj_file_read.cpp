@@ -48,9 +48,9 @@ void OBJFileReadStream::loadFromFile(std::string fileName, Model* const modelPtr
         throw NullPointerError();
     }
     this->fileName = fileName;
-    fs_ = std::ifstream{fileName};
+    fs = std::ifstream{fileName};
 
-    if (!fs_.is_open())
+    if (!fs.is_open())
     {
         LOG_ERROR("Can't open obj file, file name is {}", this->fileName);
         throw FileError("can't open file ");
@@ -61,7 +61,7 @@ void OBJFileReadStream::loadFromFile(std::string fileName, Model* const modelPtr
     auto& finalVertices = modelPtr->vertex;
     auto& finalIndices = modelPtr->indices;
 
-    while (std::getline(fs_, line))
+    while (std::getline(fs, line))
     {
         using namespace utils;
 
@@ -145,7 +145,7 @@ void OBJFileReadStream::loadFromFile(std::string fileName, Model* const modelPtr
         vertex.normal /= norm(vertex.normal);
     }
 
-    fs_.close();
+    fs.close();
 }
 
 void OBJFileReadStream::parsingFace(std::vector<std::string>& words, Model* const modelPtr)
@@ -275,5 +275,5 @@ void OBJFileReadStream::initialize()
     normals.clear();
 
     fileName.clear();
-    fs_.clear();
+    fs.clear();
 }

@@ -27,15 +27,14 @@
         }                                                                                                              \
     } while (false)
 
-#define ASSERT_EQ(val1, val2)                                                                                            \
-    do                                                                                                                   \
-    {                                                                                                                    \
-        if (!((val1) == (val2))                                                                                     \
+#define ASSERT_EQ(val1, val2)                                                                                          \
+    do                                                                                                                 \
+    {                                                                                                                  \
+        if (!((val1) == (val2)))                                                                                       \
         {                                                                                                              \
-            LOG_ERROR("Assertion Failed: {} == {}. val1: {}, val2: {}", #val1, #val2, (val1),          \
-                      (val2));                                                                                       \
+            LOG_ERROR("Assertion Failed: {} == {}. val1: {}, val2: {}", #val1, #val2, (val1), (val2));                 \
             __debugbreak();                                                                                            \
-        }                                                                                                                \
+        }                                                                                                              \
     } while (false)
 
 #define ASSERT_NE(val1, val2)                                                                                          \
