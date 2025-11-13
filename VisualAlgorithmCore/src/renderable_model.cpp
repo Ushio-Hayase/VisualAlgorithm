@@ -15,7 +15,7 @@ RenderableModel::RenderableModel(ID3D11Device* device, const Model& cpuModel)
 
         // 정점이 65535개 이하면 16비트로 생성
         if (use32BitIndices)
-            indexBuffer = std::unique_ptr<Buffer<uint32_t>>(device, cpuModel.indices);
+            indexBuffer = std::make_unique<Buffer<uint32_t>>(device, cpuModel.indices);
         else
         {
             std::vector<uint16_t> indices16;
