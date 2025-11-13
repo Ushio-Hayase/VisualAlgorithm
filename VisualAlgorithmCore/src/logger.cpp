@@ -23,9 +23,10 @@ Logger::Logger() : minLevel(LogLevel::Info)
                     localTime.tm_mday, localTime.tm_hour, localTime.tm_min, localTime.tm_sec);
     fileHandle = CreateFileW(fileName.c_str(), GENERIC_WRITE, FILE_SHARE_READ, nullptr, CREATE_ALWAYS,
                              FILE_ATTRIBUTE_NORMAL, nullptr);
-
+#ifdef _DEBUG
     consoleOutHandle = GetStdHandle(STD_OUTPUT_HANDLE);
     consoleErrHandle = GetStdHandle(STD_ERROR_HANDLE);
+#endif
 }
 
 Logger::~Logger()
@@ -40,12 +41,12 @@ Logger& Logger::getInstance()
     return instance;
 }
 
-void Logger::setLogLevel(const LogLevel lvl)
+void Logger::setLogLevel(LogLevel lvl)
 {
     minLevel = lvl;
 }
 
-void setLogLevel(const LogLevel lvl)
+void setLogLevel(LogLevel lvl)
 {
     Logger::getInstance().setLogLevel(lvl);
 }
@@ -100,6 +101,8 @@ void Logger::outputToChannels(const std::string& log) const
     constexpr char nextLine = '\n';
     if (consoleOutHandle == nullptr)
         return;
+#ifdef _DEBUG
     WriteConsole(consoleOutHandle, log.c_str(), log.length(), nullptr, nullptr);
     WriteConsole(consoleOutHandle, &nextLine, 1, nullptr, nullptr);
+#endif
 }

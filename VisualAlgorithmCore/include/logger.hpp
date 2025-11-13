@@ -27,7 +27,7 @@ class Logger
   public:
     static Logger& getInstance();
 
-    void setLogLevel(const LogLevel lvl);
+    void setLogLevel(LogLevel lvl);
 
     // 외부에서 복사/이동을 금지
     Logger(const Logger&) = delete;
@@ -57,7 +57,7 @@ class Logger
     void outputToChannels(const std::string& log) const;
 };
 
-void setLogLevel(const LogLevel lvl);
+void setLogLevel(LogLevel lvl);
 
 template <typename Value, typename... Rest>
 std::string Logger::formatMessage(const std::string& format, Value&& first, Rest&&... rest) const

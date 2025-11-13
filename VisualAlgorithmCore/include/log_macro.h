@@ -7,6 +7,7 @@
 
 #include "logger.hpp"
 
+#ifdef _DEBUG
 #define LOG_INFO(format, ...)                                                                                          \
     Logger::getInstance().write(LogLevel::Info, __FILE__, __LINE__, __FUNCTION__, format, ##__VA_ARGS__)
 
@@ -46,5 +47,14 @@
             __debugbreak();                                                                                            \
         }                                                                                                              \
     } while (false)
+#else
+#define LOG_INFO(format, ...) (void(0))
+#define LOG_WARN(format, ...) (void(0))
+#define LOG_ERROR(format, ...)                                                                                         \
+    Logger::getInstance().write(LogLevel::Error, __FILE__, __LINE__, __FUNCTION__, format, ##__VA_ARGS__)
+#define ASSERT(condition) (void(0))
+#define ASSERT_EQ(val1, val2) (void(0))
+#define ASSERT_NE(val1, val2) (void(0))
+#endif
 
 #endif // VISUALALGORITHMCORE_LOG_MACRO_H

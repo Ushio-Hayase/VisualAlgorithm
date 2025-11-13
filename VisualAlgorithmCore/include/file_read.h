@@ -5,19 +5,22 @@
 #ifndef VISUALALGORITHMCORE_FILE_READ_H
 #define VISUALALGORITHMCORE_FILE_READ_H
 
-#include <fstream>
-
 #include "model.h"
+
+#include <fstream>
 
 class FileReadStream
 {
-   protected:
+  protected:
     std::ifstream fs_;
+    std::string fileName;
 
-   public:
-    FileReadStream(std::string fileName) : fs_(fileName) {}
+    virtual void initialize() = 0;
+
+  public:
+    FileReadStream() = default;
     virtual ~FileReadStream() = default;
-    virtual void read(Model* const modelPtr) = 0;
+    virtual void loadFromFile(std::string fileName, Model* const modelPtr) = 0;
 };
 
-#endif  // VISUALALGORITHMCORE_FILE_READ_H
+#endif // VISUALALGORITHMCORE_FILE_READ_H

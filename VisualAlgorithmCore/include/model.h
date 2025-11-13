@@ -5,10 +5,10 @@
 #ifndef VISUALALGORITHMCORE_MODEL_H
 #define VISUALALGORITHMCORE_MODEL_H
 
+#include "vec.h"
+
 #include <string>
 #include <vector>
-
-#include "vec.h"
 
 struct Vertex
 {
@@ -19,22 +19,23 @@ struct Vertex
 
 struct Material
 {
-    Vector3 ambientColor;        // Ka - Ambient Color (주변광)
-    Vector3 diffuseColor;        // Kd - Diffuse Color (확산광)
-    Vector3 specularColor;       // Ks - Specular Color (반사광)
-    Vector3 emissiveColor;       // Ke - Emissive Color (방출광)
-    float shininess;             // Ns - Specular Exponent (반사광의 날카로움)
-    float indexOfRefraction;     // Ni - index of Refraction (굴절률)
-    float opacity;               // d - Opacity (불투명도)
-    Vector3 transmissionFilter;  // Tf - Transmission Filter (투과 색상)
-    int illuminationModel;       // illum - Illumination Model (조명 모델 번호)
+    std::string name;
+    Vector3 ambientColor;       // Ka - Ambient Color (주변광)
+    Vector3 diffuseColor;       // Kd - Diffuse Color (확산광)
+    Vector3 specularColor;      // Ks - Specular Color (반사광)
+    Vector3 emissiveColor;      // Ke - Emissive Color (방출광)
+    float shininess;            // Ns - Specular Exponent (반사광의 날카로움)
+    float indexOfRefraction;    // Ni - index of Refraction (굴절률)
+    float opacity;              // d - Opacity (불투명도)
+    Vector3 transmissionFilter; // Tf - Transmission Filter (투과 색상)
+    int illuminationModel;      // illum - Illumination Model (조명 모델 번호)
 };
 
 struct Mesh
 {
     uint32_t indexCount;
     uint32_t startIndexLoc;
-    std::string textureFileName;
+    std::string name;
     Material* material;
     uint32_t materialIdx;
 };
@@ -47,4 +48,4 @@ struct Model
     std::vector<uint32_t> indices;
 };
 
-#endif  // VISUALALGORITHMCORE_MODEL_H
+#endif // VISUALALGORITHMCORE_MODEL_H
