@@ -1,6 +1,6 @@
 BasedOnStyle: Microsoft
 
-# include 정렬 옵션
+# includes 정렬 옵션
 SortIncludes: true
 IncludeBlocks: Regroup
 IncludeCategories:
