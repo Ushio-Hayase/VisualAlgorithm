@@ -12,7 +12,7 @@
 
 #include <vector>
 
-template <typename T> class GpuBuffer
+template <typename T> class Buffer
 {
   private:
     ID3D11Buffer* buffer;
@@ -20,11 +20,11 @@ template <typename T> class GpuBuffer
     UINT elemCount;
 
   public:
-    GpuBuffer(ID3D11Device* device, const std::vector<T>& initialData);
-    ~GpuBuffer();
+    Buffer(ID3D11Device* device, const std::vector<T>& initialData);
+    ~Buffer();
 
-    GpuBuffer(const GpuBuffer&) = delete;
-    GpuBuffer& operator=(const GpuBuffer&) = delete;
+    Buffer(const Buffer&) = delete;
+    Buffer& operator=(const Buffer&) = delete;
 
     void bind(ID3D11DeviceContext* context) const;
 
@@ -32,7 +32,7 @@ template <typename T> class GpuBuffer
 };
 
 template <typename T>
-GpuBuffer<T>::GpuBuffer(ID3D11Device* device, const std::vector<T>& initialData)
+Buffer<T>::Buffer(ID3D11Device* device, const std::vector<T>& initialData)
     : stride(sizeof(T)), elemCount(initialData.size())
 {
     ASSERT_NE(elemCount, 0); // 데이터가 비어있으면 오륲
@@ -64,7 +64,7 @@ GpuBuffer<T>::GpuBuffer(ID3D11Device* device, const std::vector<T>& initialData)
     ASSERT_EQ(SUCCEEDED(hr), true); // 생성 실패시 프로그램 중단
 }
 
-template <typename T> void GpuBuffer<T>::bind(ID3D11DeviceContext* context) const
+template <typename T> void Buffer<T>::bind(ID3D11DeviceContext* context) const
 {
     if constexpr (std::is_same_v<std::decay_t<T>, Vertex>)
     {
@@ -81,12 +81,12 @@ template <typename T> void GpuBuffer<T>::bind(ID3D11DeviceContext* context) cons
     }
 }
 
-template <typename T> UINT GpuBuffer<T>::getElemCount() const
+template <typename T> UINT Buffer<T>::getElemCount() const
 {
     return elemCount;
 }
 
-template <typename T> GpuBuffer<T>::~GpuBuffer()
+template <typename T> Buffer<T>::~Buffer()
 {
     buffer->Release();
 }

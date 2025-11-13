@@ -42,7 +42,7 @@ struct Mesh
 
 struct Model
 {
-    std::vector<Vertex> vertex;
+    std::vector<Vertex> vertices;
     std::vector<Mesh> meshes;
     std::vector<Material> materials;
     std::vector<uint32_t> indices;

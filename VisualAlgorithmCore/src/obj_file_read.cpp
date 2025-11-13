@@ -58,7 +58,7 @@ void OBJFileReadStream::loadFromFile(std::string fileName, Model* const modelPtr
 
     std::string line;
 
-    auto& finalVertices = modelPtr->vertex;
+    auto& finalVertices = modelPtr->vertices;
     auto& finalIndices = modelPtr->indices;
 
     while (std::getline(fs, line))
@@ -162,7 +162,7 @@ void OBJFileReadStream::parsingFace(std::vector<std::string>& words, Model* cons
     }
 
     auto& finalIndices = modelPtr->indices;
-    auto& finalVertices = modelPtr->vertex;
+    auto& finalVertices = modelPtr->vertices;
 
     using namespace utils;
 
