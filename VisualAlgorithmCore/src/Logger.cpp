@@ -2,7 +2,7 @@
 // Created by UshioHayase on 2025-11-11.
 //
 
-#include "logger.hpp"
+#include "Logger.hpp"
 
 #include <Windows.h>
 

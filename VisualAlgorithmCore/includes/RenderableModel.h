@@ -7,7 +7,7 @@
 
 #include <variant>
 
-#include "buffer.hpp"
+#include "Buffer.hpp"
 
 class RenderableModel
 {

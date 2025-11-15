@@ -5,7 +5,7 @@
 #ifndef VISUALALGORITHMCORE_FILE_READ_H
 #define VISUALALGORITHMCORE_FILE_READ_H
 
-#include "model.h"
+#include "Model.h"
 
 #include <fstream>
 

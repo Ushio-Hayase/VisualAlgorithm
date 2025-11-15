@@ -5,7 +5,7 @@
 #ifndef VISUALALGORITHMCORE_OBJ_FILE_READ_H
 #define VISUALALGORITHMCORE_OBJ_FILE_READ_H
 
-#include "file_read.h"
+#include "FileRead.h"
 
 #include <unordered_map>
 

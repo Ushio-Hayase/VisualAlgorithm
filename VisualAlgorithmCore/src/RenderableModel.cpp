@@ -2,7 +2,7 @@
 // Created by UshioHayase on 2025-11-13.
 //
 
-#include "renderable_model.h"
+#include "RenderableModel.h"
 
 RenderableModel::RenderableModel(ID3D11Device* device, const Model& cpuModel)
 {

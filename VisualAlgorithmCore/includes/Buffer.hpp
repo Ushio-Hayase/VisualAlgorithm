@@ -5,8 +5,8 @@
 #ifndef VISUALALGORITHMCORE_GPU_BUFFER_HPP
 #define VISUALALGORITHMCORE_GPU_BUFFER_HPP
 
+#include "Model.h"
 #include "log_macro.h"
-#include "model.h"
 
 #include <d3d11.h>
 

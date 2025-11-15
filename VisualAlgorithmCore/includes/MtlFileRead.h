@@ -1,7 +1,7 @@
 #ifndef VISUALALGORITHMCORE_LIBRARY_H
 #define VISUALALGORITHMCORE_LIBRARY_H
 
-#include "file_read.h"
+#include "FileRead.h"
 
 constexpr int MAX_NUMBER_OF_ELEM_SIZE = (1 << 22);
 

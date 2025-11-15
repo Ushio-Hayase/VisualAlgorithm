@@ -5,7 +5,7 @@
 #ifndef VISUALALGORITHMCORE_LOG_MACRO_H
 #define VISUALALGORITHMCORE_LOG_MACRO_H
 
-#include "logger.hpp"
+#include "Logger.hpp"
 
 #ifdef _DEBUG
 #define LOG_INFO(format, ...)                                                                                          \

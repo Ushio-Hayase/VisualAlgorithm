@@ -5,7 +5,7 @@
 #ifndef VISUALALGORITHMCORE_MODEL_H
 #define VISUALALGORITHMCORE_MODEL_H
 
-#include "vec.h"
+#include "Vec.h"
 
 #include <string>
 #include <vector>
