@@ -3,8 +3,19 @@ project(VisualAlgorithmCore LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 20)
 
-file(GLOB VISUAL_ALGORITHM_CORE_SOURCE_FILES CONFIGURE_DEPENDS "./src/*.cpp")
+set(EXCLUDE_PATHS "cmake-build-debug" ".vscode")
 
-add_library(VisualAlgorithmCore STATIC ${VISUAL_ALGORITHM_CORE_SOURCE_FILES})
+file(GLOB_RECURSE SRC CONFIGURE_DEPENDS "*.cpp")
+foreach (TMP_PATH ${SRC})
+    foreach (EXCLUDE_PATH ${EXCLUDE_PATHS})
+        string(FIND ${TMP_PATH} ${EXCLUDE_PATH} RESULT)
+        if (NOT ${RESULT} EQUAL -1)
+            list(REMOVE_ITEM SRC ${TMP_PATH})
+        endif ()
+    endforeach (EXCLUDE_PATH)
+endforeach (TMP_PATH)
+
+
+add_library(VisualAlgorithmCore STATIC ${SRC})
 
 target_include_directories(VisualAlgorithmCore PUBLIC ${CMAKE_SOURCE_DIR}/includes)

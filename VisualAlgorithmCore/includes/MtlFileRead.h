@@ -3,9 +3,7 @@
 
 #include "FileRead.h"
 
-constexpr int MAX_NUMBER_OF_ELEM_SIZE = (1 << 22);
-
-class MTLFileReadStream final : FileReadStream
+class MTLFileReadStream final : public FileReadStream
 {
   private:
     void initialize() override;

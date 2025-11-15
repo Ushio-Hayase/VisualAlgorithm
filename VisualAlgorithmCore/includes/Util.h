@@ -21,14 +21,14 @@ std::vector<std::string> split_string(const std::string& str, const char ch);
 
 /** @brief 문자열 2개를 Vector2로 바꿉니다
  */
-inline Vector2 stov2(std::string& x, std::string y)
+inline Vector2 stov2(const std::string& x, const std::string y)
 {
     return {std::stof(x), std::stof(y)};
 }
 
 /** @brief 문자열 3개를 Vector3로 바꿉니다
  */
-inline Vector3 stov3(std::string& x, std::string& y, std::string& z)
+inline Vector3 stov3(const std::string& x, const std::string& y, const std::string& z)
 {
     return {std::stof(x), std::stof(y), std::stof(z)};
 }

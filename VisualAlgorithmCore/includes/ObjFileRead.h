@@ -9,7 +9,11 @@
 
 #include <unordered_map>
 
-class OBJFileReadStream final : FileReadStream
+class IObjParseState;
+
+constexpr int MAX_NUMBER_OF_ELEM_SIZE = (1 << 22);
+
+class OBJFileReadStream final : public FileReadStream
 {
   private:
     Mesh* currentMesh = nullptr;
@@ -21,15 +25,29 @@ class OBJFileReadStream final : FileReadStream
     std::vector<Vector2> textureCoors;
     std::vector<Vector3> normals;
 
-    void parsingFace(std::vector<std::string>& words, Model* const modelPtr);
-    void parsingUseMtl(std::vector<std::string>& words, Model* const modelPtr);
-    void parsingMtlLib(std::vector<std::string>& words, Model* const modelPtr);
+    Model* modelPtr = nullptr;
+
+    std::unordered_map<std::string, std::unique_ptr<IObjParseState>> stateMap;
+
+    void parseLine(std::vector<std::string>& words);
+    void registerStates();
 
     void initialize() override;
 
   public:
-    void loadFromFile(std::string fileName, Model* const modelPtr) override;
     ~OBJFileReadStream() override = default;
+
+    void loadFromFile(std::string fileName, Model* const modelPtr) override;
+
+    std::vector<Vector3>& getPositions();
+    std::vector<Vector2>& getTextureCoors();
+    std::vector<Vector3>& getNormals();
+
+    std::unordered_map<int64_t, uint32_t>& getHistory();
+    const std::unordered_map<std::string, int>& getMaterialNameToIdx() const;
+
+    Mesh*& getCurrentMesh();
+    Model* getModelPtr() const;
 };
 
 #endif // VISUALALGORITHMCORE_OBJ_FILE_READ_H

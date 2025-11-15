@@ -21,6 +21,11 @@ class FileReadStream
     FileReadStream() = default;
     virtual ~FileReadStream() = default;
     virtual void loadFromFile(std::string fileName, Model* const modelPtr) = 0;
+
+    std::string getFileName()
+    {
+        return fileName;
+    }
 };
 
 #endif // VISUALALGORITHMCORE_FILE_READ_H
