@@ -29,3 +29,5 @@ PointerAlignment: Left
 IndentWidth: 4
 TabWidth: 4
 UseTab: Never
+
+AllowShortFunctionsOnASingleLine: true

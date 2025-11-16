@@ -2,11 +2,11 @@
 // Created by UshioHayase on 2025-11-16.
 //
 
-#include "obj_parse/UseMtlParseState.h"
+#include "ObjParse/UseMtlParseState.h"
 
 #include "Exception.h"
 #include "ObjFileRead.h"
-#include "log_macro.h"
+#include "LogMacro.h"
 
 void UseMtlParseState::parseLine(OBJFileReadStream& context, const std::vector<std::string>& words) const
 {

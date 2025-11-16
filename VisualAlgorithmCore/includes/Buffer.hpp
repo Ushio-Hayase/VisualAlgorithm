@@ -5,8 +5,8 @@
 #ifndef VISUALALGORITHMCORE_GPU_BUFFER_HPP
 #define VISUALALGORITHMCORE_GPU_BUFFER_HPP
 
+#include "LogMacro.h"
 #include "Model.h"
-#include "log_macro.h"
 
 #include <d3d11.h>
 
@@ -26,6 +26,11 @@ template <typename T> class Buffer
     Buffer(const Buffer&) = delete;
     Buffer& operator=(const Buffer&) = delete;
 
+    /**
+     * @brief 버퍼를 Input-Assembler에 묶습니다.
+     *
+     * @param context ID3D11DeviceContext 객체
+     */
     void bind(ID3D11DeviceContext* context) const;
 
     UINT getElemCount() const;
@@ -81,14 +86,8 @@ template <typename T> void Buffer<T>::bind(ID3D11DeviceContext* context) const
     }
 }
 
-template <typename T> UINT Buffer<T>::getElemCount() const
-{
-    return elemCount;
-}
+template <typename T> UINT Buffer<T>::getElemCount() const { return elemCount; }
 
-template <typename T> Buffer<T>::~Buffer()
-{
-    buffer->Release();
-}
+template <typename T> Buffer<T>::~Buffer() { buffer->Release(); }
 
 #endif // VISUALALGORITHMCORE_GPU_BUFFER_H

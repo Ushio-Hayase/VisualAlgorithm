@@ -2,12 +2,12 @@
 // Created by UshioHayase on 2025-11-16.
 //
 
-#include "obj_parse/NormalParseState.h"
+#include "ObjParse/NormalParseState.h"
 
 #include "Exception.h"
 #include "ObjFileRead.h"
 #include "Util.h"
-#include "log_macro.h"
+#include "LogMacro.h"
 
 void NormalParseState::parseLine(OBJFileReadStream& context, const std::vector<std::string>& words) const
 {

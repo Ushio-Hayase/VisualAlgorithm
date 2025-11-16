@@ -2,12 +2,12 @@
 // Created by UshioHayase on 2025-11-15.
 //
 
-#include "obj_parse/VertexParseState.h"
+#include "ObjParse/VertexParseState.h"
 
 #include "Exception.h"
 #include "ObjFileRead.h"
 #include "Util.h"
-#include "log_macro.h"
+#include "LogMacro.h"
 
 void VertexParseState::parseLine(OBJFileReadStream& context, const std::vector<std::string>& words) const
 {

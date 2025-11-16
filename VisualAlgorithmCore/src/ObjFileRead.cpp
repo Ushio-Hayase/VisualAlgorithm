@@ -7,15 +7,15 @@
 #include "Exception.h"
 #include "MtlFileRead.h"
 #include "Util.h"
-#include "log_macro.h"
+#include "LogMacro.h"
 
-#include "obj_parse/FaceParseState.h"
-#include "obj_parse/IObjParseState.h"
-#include "obj_parse/MtlLibParseState.h"
-#include "obj_parse/NormalParseState.h"
-#include "obj_parse/TextureParseState.h"
-#include "obj_parse/UseMtlParseState.h"
-#include "obj_parse/VertexParseState.h"
+#include "../includes/ObjParse/FaceParseState.h"
+#include "../includes/ObjParse/IObjParseState.h"
+#include "../includes/ObjParse/MtlLibParseState.h"
+#include "../includes/ObjParse/NormalParseState.h"
+#include "../includes/ObjParse/TextureParseState.h"
+#include "../includes/ObjParse/UseMtlParseState.h"
+#include "../includes/ObjParse/VertexParseState.h"
 
 void OBJFileReadStream::loadFromFile(std::string fileName, Model* const modelPtr)
 {

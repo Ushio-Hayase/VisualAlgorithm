@@ -2,7 +2,7 @@
 
 #include "Exception.h"
 #include "Util.h"
-#include "log_macro.h"
+#include "LogMacro.h"
 
 #include <unordered_map>
 
