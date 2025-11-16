@@ -5,6 +5,7 @@
 #ifndef VISUALALGORITHMCORE_SHADER_HPP
 #define VISUALALGORITHMCORE_SHADER_HPP
 
+#include "Exception.h"
 #include "LogMacro.h"
 
 #include "BindingStrategy/IBindingStrategy.h"
@@ -12,8 +13,10 @@
 #include "BindingStrategy/VSBindingStrategy.h"
 
 #include <d3d11.h>
+#include <d3dcompiler.h>
 
 #include <string>
+#include <fstream>
 #include <vector>
 
 template <typename TShaderType> class Shader
@@ -37,6 +40,27 @@ template <typename TShaderType> class Shader
 
 template <typename TShaderType> Shader<TShaderType>::Shader(ID3D11Device* device, const std::string& filePath)
 {
+    
+    std::ifstream file{filePath, std::ios::in | std::ios::binary};
+
+    if (!file.is_open())
+    {
+        LOG_ERROR("Can't open shader file, file path is {}", filePath);
+        throw FileError("Can't open shader file");
+    }
+
+    file.seekg(0, std::ios::end);
+    
+    size_t fileSize = file.tellg();
+
+    byteCode.reserve(fileSize);
+    
+    file.read(byteCode.data(), fileSize);
+
+    file.close();
+
+    D3DCompileFromFile(filePath, );
+    
     HRESULT hr;
 
     if constexpr (std::is_same_v<std::decay_t<TShaderType>, ID3D11VertexShader>)
@@ -71,6 +95,11 @@ template <typename TShaderType> Shader<TShaderType>::Shader(ID3D11Device* device
 
         strategy = std::make_unique<PSBindingStrategy>();
     }
+    else
+    {
+        static_assert(false, "Unsupported shader type provided to Shader<T> class.");
+    }
+
 }
 
 template <typename TShaderType> Shader<TShaderType>::~Shader()

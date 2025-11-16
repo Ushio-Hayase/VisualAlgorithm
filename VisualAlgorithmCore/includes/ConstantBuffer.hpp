@@ -23,7 +23,7 @@ template <typename T> class ConstantBuffer
     ConstantBuffer(const ConstantBuffer&) = delete;
     ConstantBuffer& operator=(const ConstantBuffer&) = delete;
 
-    // [핵심] Map/Unmap을 이용한 데이터 업데이트 함수
+    // Map/Unmap을 이용한 데이터 업데이트 함수
     void update(ID3D11DeviceContext* context, const T& data);
 
     void bind(ID3D11DeviceContext* context, const IConstantBufferBindStrategy& strategy, UINT slot) const;
@@ -31,7 +31,7 @@ template <typename T> class ConstantBuffer
 
 template <typename T> ConstantBuffer<T>::ConstantBuffer(ID3D11Device* device)
 {
-    // [중요] 상수 버퍼의 크기는 반드시 16바이트의 배수여야 함!
+    // 상수 버퍼의 크기는 반드시 16바이트의 배수여야 함!
     static_assert(sizeof(T) % 16 == 0, "ConstantBuffer data size must be a multiple of 16 bytes.");
 
     D3D11_BUFFER_DESC desc = {};

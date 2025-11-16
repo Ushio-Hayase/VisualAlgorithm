@@ -35,6 +35,8 @@ void OBJFileReadStream::loadFromFile(std::string fileName, Model* const modelPtr
         throw FileError("can't open file ");
     }
 
+    initialize();
+
     std::string line;
 
     while (std::getline(fs, line))
