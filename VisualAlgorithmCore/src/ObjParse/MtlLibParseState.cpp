@@ -5,9 +5,9 @@
 #include "ObjParse/MtlLibParseState.h"
 
 #include "Exception.h"
+#include "LogMacro.h"
 #include "MtlFileRead.h"
 #include "ObjFileRead.h"
-#include "LogMacro.h"
 
 void MtlLibParseState::parseLine(OBJFileReadStream& context, const std::vector<std::string>& words) const
 {
@@ -17,21 +17,21 @@ void MtlLibParseState::parseLine(OBJFileReadStream& context, const std::vector<s
         throw FileError("File reading error");
     }
 
-    auto modelPtr = context.getModelPtr();
-    auto fileName = context.getFileName();
-    auto materialNameToIdx = context.getMaterialNameToIdx();
+    auto model_ptr = context.getModelPtr();
+    auto file_name = context.getFileName();
+    auto material_name_to_idx = context.getMaterialNameToIdx();
 
     std::string mtlFileName = words[1];
 
-    int beforeLastIdx = modelPtr->materials.size() - 1;
+    int before_last_idx = model_ptr->materials.size() - 1;
 
-    MTLFileReadStream mtlFile;
-    mtlFile.loadFromFile(fileName, modelPtr);
+    MTLFileReadStream mtl_file;
+    mtl_file.loadFromFile(file_name, model_ptr);
 
-    int afterLastIdx = modelPtr->materials.size() - 1;
+    int after_last_idx = model_ptr->materials.size() - 1;
 
-    for (int i = beforeLastIdx + 1; i < afterLastIdx; ++i)
+    for (int i = before_last_idx + 1; i < after_last_idx; ++i)
     {
-        materialNameToIdx.emplace(modelPtr->materials[i].name, i);
+        material_name_to_idx.emplace(model_ptr->materials[i].name, i);
     }
 }

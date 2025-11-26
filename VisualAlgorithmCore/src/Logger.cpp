@@ -10,29 +10,29 @@
 #include <ctime>
 #include <format>
 
-Logger::Logger() : minLevel(LogLevel::Info)
+Logger::Logger() : min_level(LogLevel::Info)
 {
     const auto now = std::chrono::system_clock::now();
-    const auto timeT = std::chrono::system_clock::to_time_t(now);
+    const auto time_t = std::chrono::system_clock::to_time_t(now);
 
-    tm localTime{};
-    localtime_s(&localTime, &timeT);
+    tm local_time{};
+    localtime_s(&local_time, &time_t);
 
-    const std::wstring fileName =
-        std::format(L"visual-algorithm-core-log-{}.{}.{}-{}:{}:{}.txt", localTime.tm_year + 1900, localTime.tm_mon + 1,
-                    localTime.tm_mday, localTime.tm_hour, localTime.tm_min, localTime.tm_sec);
-    fileHandle = CreateFileW(fileName.c_str(), GENERIC_WRITE, FILE_SHARE_READ, nullptr, CREATE_ALWAYS,
+    const std::wstring file_name =
+        std::format(L"visual-algorithm-core-log-{}.{}.{}-{}:{}:{}.txt", local_time.tm_year + 1900, local_time.tm_mon + 1,
+                    local_time.tm_mday, local_time.tm_hour, local_time.tm_min, local_time.tm_sec);
+    file_handle = CreateFileW(file_name.c_str(), GENERIC_WRITE, FILE_SHARE_READ, nullptr, CREATE_ALWAYS,
                              FILE_ATTRIBUTE_NORMAL, nullptr);
 #ifdef _DEBUG
-    consoleOutHandle = GetStdHandle(STD_OUTPUT_HANDLE);
-    consoleErrHandle = GetStdHandle(STD_ERROR_HANDLE);
+    console_out_handle = GetStdHandle(STD_OUTPUT_HANDLE);
+    console_err_handle = GetStdHandle(STD_ERROR_HANDLE);
 #endif
 }
 
 Logger::~Logger()
 {
-    if (GetHandleInformation(fileHandle, nullptr) != 0)
-        CloseHandle(fileHandle);
+    if (GetHandleInformation(file_handle, nullptr) != 0)
+        CloseHandle(file_handle);
 }
 
 Logger& Logger::getInstance()
@@ -43,7 +43,7 @@ Logger& Logger::getInstance()
 
 void Logger::setLogLevel(LogLevel lvl)
 {
-    minLevel = lvl;
+    min_level = lvl;
 }
 
 void setLogLevel(LogLevel lvl)
@@ -63,13 +63,13 @@ std::string Logger::buildLogEntry(LogLevel lvl, const char* file, int line, cons
 
     // 1. 현재 시간 구하기 (std::chrono)
     const auto now = std::chrono::system_clock::now();
-    const auto timeT = std::chrono::system_clock::to_time_t(now);
+    const auto time_t = std::chrono::system_clock::to_time_t(now);
 
-    tm localTime;
-    localtime_s(&localTime, &timeT);
+    tm local_time;
+    localtime_s(&local_time, &time_t);
 
     // 시간 포맷팅: [YYYY-MM-DD HH:MM:SS]
-    ss << "[" << std::put_time(&localTime, "%Y-%m-%d %H:%M:%S") << "]";
+    ss << "[" << std::put_time(&local_time, "%Y-%m-%d %H:%M:%S") << "]";
 
     // 로그 레벨 표기
     switch (lvl)
@@ -95,14 +95,14 @@ std::string Logger::buildLogEntry(LogLevel lvl, const char* file, int line, cons
 
 void Logger::outputToChannels(const std::string& log) const
 {
-    if (fileHandle != nullptr)
-        WriteFile(fileHandle, log.c_str(), log.length(), nullptr, nullptr);
+    if (file_handle != nullptr)
+        WriteFile(file_handle, log.c_str(), log.length(), nullptr, nullptr);
 
-    constexpr char nextLine = '\n';
-    if (consoleOutHandle == nullptr)
+    constexpr char NEXT_LINE = '\n';
+    if (console_out_handle == nullptr)
         return;
 #ifdef _DEBUG
-    WriteConsole(consoleOutHandle, log.c_str(), log.length(), nullptr, nullptr);
-    WriteConsole(consoleOutHandle, &nextLine, 1, nullptr, nullptr);
+    WriteConsole(console_out_handle, log.c_str(), log.length(), nullptr, nullptr);
+    WriteConsole(console_out_handle, &NEXT_LINE, 1, nullptr, nullptr);
 #endif
 }

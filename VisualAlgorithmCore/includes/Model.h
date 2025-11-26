@@ -13,31 +13,31 @@
 struct Vertex
 {
     Vector3 position;
-    Vector2 textureCoor;
+    Vector2 texture_coor;
     Vector3 normal;
 };
 
 struct Material
 {
     std::string name;
-    Vector3 ambientColor;       // Ka - Ambient Color (주변광)
-    Vector3 diffuseColor;       // Kd - Diffuse Color (확산광)
-    Vector3 specularColor;      // Ks - Specular Color (반사광)
-    Vector3 emissiveColor;      // Ke - Emissive Color (방출광)
+    Vector3 ambient_color;       // Ka - Ambient Color (주변광)
+    Vector3 diffuse_color;       // Kd - Diffuse Color (확산광)
+    Vector3 specular_color;      // Ks - Specular Color (반사광)
+    Vector3 emissive_color;      // Ke - Emissive Color (방출광)
     float shininess;            // Ns - Specular Exponent (반사광의 날카로움)
-    float indexOfRefraction;    // Ni - index of Refraction (굴절률)
+    float index_of_refraction;    // Ni - index of Refraction (굴절률)
     float opacity;              // d - Opacity (불투명도)
-    Vector3 transmissionFilter; // Tf - Transmission Filter (투과 색상)
-    int illuminationModel;      // illum - Illumination Model (조명 모델 번호)
+    Vector3 transmission_filter; // Tf - Transmission Filter (투과 색상)
+    int illumination_model;      // illum - Illumination Model (조명 모델 번호)
 };
 
 struct Mesh
 {
-    uint32_t indexCount;
-    uint32_t startIndexLoc;
+    uint32_t index_count;
+    uint32_t start_index_loc;
     std::string name;
     Material* material;
-    uint32_t materialIdx;
+    uint32_t material_idx;
 };
 
 struct Model

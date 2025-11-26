@@ -9,7 +9,7 @@ class MTLFileReadStream final : public FileReadStream
     void initialize() override;
 
   public:
-    void loadFromFile(std::string fileName, Model* const modelPtr) override;
+    void loadFromFile(std::string file_name, Model* const model_ptr) override;
     ~MTLFileReadStream() override = default;
 };
 

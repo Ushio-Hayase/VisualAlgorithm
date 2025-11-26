@@ -5,27 +5,27 @@
 #include "ObjParse/FaceParseState.h"
 
 #include "Exception.h"
+#include "LogMacro.h"
 #include "ObjFileRead.h"
 #include "Util.h"
-#include "LogMacro.h"
 
 void FaceParseState::parseLine(OBJFileReadStream& context, const std::vector<std::string>& words) const
 {
-    auto currentMesh = context.getCurrentMesh();
-    const auto modelPtr = context.getModelPtr();
+    auto current_mesh = context.getCurrentMesh();
+    const auto model_ptr = context.getModelPtr();
     auto history = context.getHistory();
     const auto positions = context.getPositions();
-    const auto textureCoors = context.getTextureCoors();
+    const auto texture_coors = context.getTextureCoors();
     const auto normals = context.getNormals();
 
-    if (currentMesh == nullptr)
+    if (current_mesh == nullptr)
     {
-        modelPtr->meshes.emplace_back();
-        currentMesh = &modelPtr->meshes.back();
-        currentMesh->name = "default";
-        currentMesh->materialIdx = -1;
-        currentMesh->startIndexLoc = 0;
-        currentMesh->indexCount = 0;
+        model_ptr->meshes.emplace_back();
+        current_mesh = &model_ptr->meshes.back();
+        current_mesh->name = "default";
+        current_mesh->materialIdx = -1;
+        current_mesh->startIndexLoc = 0;
+        current_mesh->indexCount = 0;
         LOG_WARN("Face data found before any 'usemtl' directive. Using default material.");
     }
 
@@ -35,8 +35,8 @@ void FaceParseState::parseLine(OBJFileReadStream& context, const std::vector<std
         throw FileError("File reading error");
     }
 
-    auto& finalIndices = modelPtr->indices;
-    auto& finalVertices = modelPtr->vertices;
+    auto& final_indices = model_ptr->indices;
+    auto& final_vertices = model_ptr->vertices;
 
     using namespace utils;
 
@@ -63,33 +63,33 @@ void FaceParseState::parseLine(OBJFileReadStream& context, const std::vector<std
 
         if (history.contains(key))
         {
-            finalIndices.push_back(history[key]);
+            final_indices.push_back(history[key]);
             continue;
         }
 
-        Vertex newVertex{};
+        Vertex new_vertex{};
 
-        newVertex.position = positions[v - 1];
+        new_vertex.position = positions[v - 1];
 
         if (vt >= 0)
-            newVertex.textureCoor = textureCoors[vt - 1];
+            new_vertex.textureCoor = texture_coors[vt - 1];
         else
-            newVertex.textureCoor = {0.0f, 0.0f};
+            new_vertex.textureCoor = {0.0f, 0.0f};
 
         if (vn >= 0)
-            newVertex.normal = normals[vn - 1];
+            new_vertex.normal = normals[vn - 1];
         else
         {
-            newVertex.normal = {0.0f, 0.0f, 0.0f};
+            new_vertex.normal = {0.0f, 0.0f, 0.0f};
         }
 
-        finalVertices.emplace_back(newVertex);
+        final_vertices.emplace_back(new_vertex);
 
-        uint32_t new_idx = finalVertices.size() - 1;
-        finalIndices.push_back(new_idx);
+        uint32_t new_idx = final_vertices.size() - 1;
+        final_indices.push_back(new_idx);
 
         history[key] = new_idx;
     }
 
-    currentMesh->indexCount += 3;
+    current_mesh->indexCount += 3;
 }

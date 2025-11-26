@@ -5,8 +5,8 @@
 #include "ObjParse/UseMtlParseState.h"
 
 #include "Exception.h"
-#include "ObjFileRead.h"
 #include "LogMacro.h"
+#include "ObjFileRead.h"
 
 void UseMtlParseState::parseLine(OBJFileReadStream& context, const std::vector<std::string>& words) const
 {
@@ -16,31 +16,31 @@ void UseMtlParseState::parseLine(OBJFileReadStream& context, const std::vector<s
         throw FileError("File reading error");
     }
 
-    auto modelPtr = context.getModelPtr();
-    auto materialNameToIdx = context.getMaterialNameToIdx();
-    auto currentMesh = context.getCurrentMesh();
+    auto model_ptr = context.getModelPtr();
+    auto material_name_to_idx = context.getMaterialNameToIdx();
+    auto current_mesh = context.getCurrentMesh();
 
-    auto& finalMeshes = modelPtr->meshes;
-    auto& finalIndices = modelPtr->indices;
+    auto& final_meshes = model_ptr->meshes;
+    auto& final_indices = model_ptr->indices;
 
-    std::string materialName = words[1];
+    std::string material_name = words[1];
 
-    int materialIdx = -1;
-    if (materialNameToIdx.contains(materialName))
+    int material_idx = -1;
+    if (material_name_to_idx.contains(material_name))
     {
-        materialIdx = materialNameToIdx[materialName];
+        material_idx = material_name_to_idx[material_name];
     }
     else
     {
-        LOG_WARN("Material '{}' not found in .mtl file", materialName);
+        LOG_WARN("Material '{}' not found in .mtl file", material_name);
     }
 
-    finalMeshes.emplace_back();
-    currentMesh = &finalMeshes.back();
+    final_meshes.emplace_back();
+    current_mesh = &final_meshes.back();
 
-    currentMesh->name = materialName;
-    currentMesh->materialIdx = materialIdx;
-    currentMesh->startIndexLoc = finalIndices.size();
+    current_mesh->name = material_name;
+    current_mesh->materialIdx = material_idx;
+    current_mesh->startIndexLoc = final_indices.size();
 
-    currentMesh->indexCount = 0;
+    current_mesh->indexCount = 0;
 }

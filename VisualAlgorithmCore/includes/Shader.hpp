@@ -15,8 +15,8 @@
 #include <d3d11.h>
 #include <d3dcompiler.h>
 
-#include <string>
 #include <fstream>
+#include <string>
 #include <vector>
 
 template <typename TShaderType> class Shader
@@ -40,7 +40,7 @@ template <typename TShaderType> class Shader
 
 template <typename TShaderType> Shader<TShaderType>::Shader(ID3D11Device* device, const std::string& filePath)
 {
-    
+
     std::ifstream file{filePath, std::ios::in | std::ios::binary};
 
     if (!file.is_open())
@@ -50,17 +50,15 @@ template <typename TShaderType> Shader<TShaderType>::Shader(ID3D11Device* device
     }
 
     file.seekg(0, std::ios::end);
-    
+
     size_t fileSize = file.tellg();
 
     byteCode.reserve(fileSize);
-    
+
     file.read(byteCode.data(), fileSize);
 
     file.close();
 
-    D3DCompileFromFile(filePath, nullptr, nullptr, );
-    
     HRESULT hr;
 
     if constexpr (std::is_same_v<std::decay_t<TShaderType>, ID3D11VertexShader>)
@@ -99,7 +97,6 @@ template <typename TShaderType> Shader<TShaderType>::Shader(ID3D11Device* device
     {
         static_assert(false, "Unsupported shader type provided to Shader<T> class.");
     }
-
 }
 
 template <typename TShaderType> Shader<TShaderType>::~Shader()

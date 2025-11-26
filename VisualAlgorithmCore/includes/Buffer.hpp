@@ -17,10 +17,10 @@ template <typename T> class Buffer
   private:
     ID3D11Buffer* buffer;
     UINT stride;
-    UINT elemCount;
+    UINT elem_count;
 
   public:
-    Buffer(ID3D11Device* device, const std::vector<T>& initialData);
+    Buffer(ID3D11Device* device, const std::vector<T>& initial_data);
     ~Buffer();
 
     Buffer(const Buffer&) = delete;
@@ -37,13 +37,13 @@ template <typename T> class Buffer
 };
 
 template <typename T>
-Buffer<T>::Buffer(ID3D11Device* device, const std::vector<T>& initialData)
-    : stride(sizeof(T)), elemCount(initialData.size())
+Buffer<T>::Buffer(ID3D11Device* device, const std::vector<T>& initial_data)
+    : stride(sizeof(T)), elem_count(initial_data.size())
 {
-    ASSERT_NE(elemCount, 0); // 데이터가 비어있으면 오륲
+    ASSERT_NE(elem_count, 0); // 데이터가 비어있으면 오륲
 
     D3D11_BUFFER_DESC desc = {};
-    desc.ByteWidth = stride * elemCount;
+    desc.ByteWidth = stride * elem_count;
     desc.Usage = D3D11_USAGE_DEFAULT; // Gpu Read/Write
     desc.CPUAccessFlags = 0;
     desc.MiscFlags = 0;
@@ -62,11 +62,11 @@ Buffer<T>::Buffer(ID3D11Device* device, const std::vector<T>& initialData)
         static_assert(false, "Unsupported buffer type provided to Buffer<T> class.");
     }
 
-    D3D11_SUBRESOURCE_DATA subresourceData = {};
-    subresourceData.pSysMem = initialData.data();
+    D3D11_SUBRESOURCE_DATA subresource_data = {};
+    subresource_data.pSysMem = initial_data.data();
 
-    HRESULT hr = device->CreateBuffer(&desc, &subresourceData, &buffer);
-    ASSERT_EQ(SUCCEEDED(hr), true); // 생성 실패시 프로그램 중단
+    HRESULT hr = device->CreateBuffer(&desc, &subresource_data, &buffer);
+    ASSERT(SUCCEEDED(hr)); // 생성 실패시 프로그램 중단
 }
 
 template <typename T> void Buffer<T>::bind(ID3D11DeviceContext* context) const
@@ -86,7 +86,7 @@ template <typename T> void Buffer<T>::bind(ID3D11DeviceContext* context) const
     }
 }
 
-template <typename T> UINT Buffer<T>::getElemCount() const { return elemCount; }
+template <typename T> UINT Buffer<T>::getElemCount() const { return elem_count; }
 
 template <typename T> Buffer<T>::~Buffer() { buffer->Release(); }
 

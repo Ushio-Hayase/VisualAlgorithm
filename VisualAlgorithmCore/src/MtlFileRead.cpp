@@ -1,8 +1,8 @@
 #include "MtlFileRead.h"
 
 #include "Exception.h"
-#include "Util.h"
 #include "LogMacro.h"
+#include "Util.h"
 
 #include <unordered_map>
 
@@ -22,7 +22,7 @@ enum class MtlKeyword
     Ni      // 굴절률(Optical Density), 1.0은 굴절이 없음
 };
 
-std::unordered_map<std::string, MtlKeyword> mtlKeywordMap = {
+std::unordered_map<std::string, MtlKeyword> mtl_keyword_map = {
     {"newmtl", MtlKeyword::newmtl}, {"Ka", MtlKeyword::Ka}, {"Kd", MtlKeyword::Kd}, {"Ks", MtlKeyword::Ks},
     {"Ke", MtlKeyword::Ke},         {"Tf", MtlKeyword::Tf}, {"Ns", MtlKeyword::Ns}, {"d", MtlKeyword::d},
     {"Tr", MtlKeyword::Tr},         {"Ni", MtlKeyword::Ni}};
@@ -37,16 +37,16 @@ __forceinline void wordsLengthCheck(const int src, const int criteria, const cha
 }
 } // namespace
 
-void MTLFileReadStream::loadFromFile(std::string fileName, Model* const modelPtr)
+void MTLFileReadStream::loadFromFile(std::string file_name, Model* const model_ptr)
 {
-    if (!modelPtr)
+    if (!model_ptr)
     {
         LOG_ERROR("model pointer is null!");
         throw NullPointerError();
     }
 
-    this->fileName = fileName;
-    fs = std::ifstream{fileName};
+    this->fileName = file_name;
+    fs = std::ifstream{file_name};
 
     if (!fs.is_open())
     {
@@ -56,7 +56,7 @@ void MTLFileReadStream::loadFromFile(std::string fileName, Model* const modelPtr
 
     std::string line;
 
-    auto& finalMaterials = modelPtr->materials;
+    auto& final_materials = model_ptr->materials;
 
     while (std::getline(fs, line))
     {
@@ -65,68 +65,68 @@ void MTLFileReadStream::loadFromFile(std::string fileName, Model* const modelPtr
 
         std::string& key_word = words[0];
 
-        if (!mtlKeywordMap.contains(key_word))
+        if (!mtl_keyword_map.contains(key_word))
         {
             continue;
         }
 
-        auto& currentMaterial = finalMaterials.back();
+        auto& current_material = final_materials.back();
 
-        switch (mtlKeywordMap[key_word])
+        switch (mtl_keyword_map[key_word])
         {
         case MtlKeyword::newmtl: {
-            finalMaterials.emplace_back();
+            final_materials.emplace_back();
             if (words.size() < 2)
             {
                 LOG_ERROR("Can't find material name");
                 throw FileError("Can't find material name");
             }
-            finalMaterials.back().name = words[1];
+            final_materials.back().name = words[1];
             break;
         }
         case MtlKeyword::Ka: {
             wordsLengthCheck(words.size(), 4, "Ka");
-            currentMaterial.ambientColor = stov3(words[1], words[2], words[3]);
+            current_material.ambientColor = stov3(words[1], words[2], words[3]);
             break;
         }
         case MtlKeyword::Kd: {
             wordsLengthCheck(words.size(), 4, "Kd");
-            currentMaterial.diffuseColor = stov3(words[1], words[2], words[3]);
+            current_material.diffuseColor = stov3(words[1], words[2], words[3]);
             break;
         }
         case MtlKeyword::Ks: {
             wordsLengthCheck(words.size(), 4, "Ks");
-            currentMaterial.specularColor = stov3(words[1], words[2], words[3]);
+            current_material.specularColor = stov3(words[1], words[2], words[3]);
             break;
         }
         case MtlKeyword::Ke: {
             wordsLengthCheck(words.size(), 4, "Ke");
-            currentMaterial.emissiveColor = stov3(words[1], words[2], words[3]);
+            current_material.emissiveColor = stov3(words[1], words[2], words[3]);
             break;
         }
         case MtlKeyword::Tf: {
             wordsLengthCheck(words.size(), 4, "Tf");
-            currentMaterial.transmissionFilter = stov3(words[1], words[2], words[3]);
+            current_material.transmissionFilter = stov3(words[1], words[2], words[3]);
             break;
         }
         case MtlKeyword::Ns: {
             wordsLengthCheck(words.size(), 2, "Ns");
-            currentMaterial.shininess = std::stof(words[1]);
+            current_material.shininess = std::stof(words[1]);
             break;
         }
         case MtlKeyword::d: {
             wordsLengthCheck(words.size(), 2, "d");
-            currentMaterial.opacity = std::stof(words[1]);
+            current_material.opacity = std::stof(words[1]);
             break;
         }
         case MtlKeyword::Tr: {
             wordsLengthCheck(words.size(), 2, "Tr");
-            currentMaterial.opacity = 1 - std::stof(words[1]);
+            current_material.opacity = 1 - std::stof(words[1]);
             break;
         }
         case MtlKeyword::Ni: {
             wordsLengthCheck(words.size(), 2, "Ni");
-            currentMaterial.indexOfRefraction = std::stof(words[1]);
+            current_material.indexOfRefraction = std::stof(words[1]);
             break;
         }
         default: {

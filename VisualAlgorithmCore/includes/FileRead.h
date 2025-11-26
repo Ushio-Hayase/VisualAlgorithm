@@ -13,19 +13,16 @@ class FileReadStream
 {
   protected:
     std::ifstream fs;
-    std::string fileName;
+    std::string file_name;
 
     virtual void initialize() = 0;
 
   public:
     FileReadStream() = default;
     virtual ~FileReadStream() = default;
-    virtual void loadFromFile(std::string fileName, Model* const modelPtr) = 0;
+    virtual void loadFromFile(std::string file_name, Model* const model_ptr) = 0;
 
-    std::string getFileName()
-    {
-        return fileName;
-    }
+    std::string getFileName() { return file_name; }
 };
 
 #endif // VISUALALGORITHMCORE_FILE_READ_H

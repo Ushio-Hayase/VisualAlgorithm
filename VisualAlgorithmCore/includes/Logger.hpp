@@ -19,10 +19,10 @@ enum class LogLevel
 class Logger
 {
   private:
-    void* consoleOutHandle = nullptr;
-    void* consoleErrHandle = nullptr;
-    void* fileHandle = nullptr;
-    LogLevel minLevel;
+    void* console_out_handle = nullptr;
+    void* console_err_handle = nullptr;
+    void* file_handle = nullptr;
+    LogLevel min_level;
 
   public:
     static Logger& getInstance();
@@ -62,14 +62,14 @@ void setLogLevel(LogLevel lvl);
 template <typename Value, typename... Rest>
 std::string Logger::formatMessage(const std::string& format, Value&& first, Rest&&... rest) const
 {
-    auto bracePos = format.find("{}");
+    auto brace_pos = format.find("{}");
 
-    if (bracePos == std::string::npos)
+    if (brace_pos == std::string::npos)
         return format;
 
-    std::string before = format.substr(0, bracePos);
+    std::string before = format.substr(0, brace_pos);
 
-    std::string after = format.substr(bracePos + 2);
+    std::string after = format.substr(brace_pos + 2);
 
     std::stringstream ss;
 
@@ -89,12 +89,12 @@ template <typename... Args>
 void Logger::write(const LogLevel level, const char* file, int line, const char* function, const std::string& format,
                    Args... args) const
 {
-    if (level < minLevel)
+    if (level < min_level)
         return;
 
-    std::string userMessage = formatMessage(format, args...);
-    std::string finalLog = buildLogEntry(level, file, line, function, userMessage);
-    outputToChannels(finalLog);
+    std::string user_message = formatMessage(format, args...);
+    std::string final_log = buildLogEntry(level, file, line, function, user_message);
+    outputToChannels(final_log);
 }
 
 #endif // VISUALALGORITHMCORE_LOGGER_H
