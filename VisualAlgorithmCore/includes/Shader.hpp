@@ -59,7 +59,7 @@ template <typename TShaderType> Shader<TShaderType>::Shader(ID3D11Device* device
 
     file.close();
 
-    D3DCompileFromFile(filePath, );
+    D3DCompileFromFile(filePath, nullptr, nullptr, );
     
     HRESULT hr;
 

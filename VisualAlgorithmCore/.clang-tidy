@@ -1,0 +1,43 @@
+Checks: 'readability-identifier-naming'
+
+CheckOptions:
+# 변수
+  - key: readability-identifier-naming.VariableCase
+    value: lower_case
+# 함수 매개변수
+  - key: readability-identifier-naming.ParameterCase
+    value: lower_case
+# 클래스 멤버 변수
+  - key: readability-identifier-naming.MemberCase
+    value: lower_case
+    
+# 함수
+  - key: readability-identifier-naming.FunctionCase
+    value: lowerCamelCase
+# 클래스 메서드
+  - key: readablility-identifier-naming.MethodCase
+    value: lowerCamelCase
+  
+# 클래스
+  - key: readability-identifier-naming.ClassCase
+    value: CamelCase
+# 구조체
+  - key: readablility-identifier-naming.StructCase
+    value: CamelCase
+# 열거형
+  - key: readability-identifier-naming.EnumCase
+    value: CamelCase
+# 유니온
+  - key: readability-identifier-naming.UnionCase
+    value: CamelCase
+    
+# 전역 상수
+  - key: readability-identifier-naming.GlobalConstantCase
+    value: UPPER_CASE
+# constexpr 상수
+  - key: readability-identifier-naming.ConstexprVariableCase
+    value: UPPER_CASE
+    
+# 매크로
+  - key: readability-identifier-naming.MacroDefinitionCase
+    value: UPPER_CASE
